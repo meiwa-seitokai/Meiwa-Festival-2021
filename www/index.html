@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 	<script>
+   const applicationKey = 'fb9bdc1de88d2a7e66af9dce46c0b5211ace58c5921dc29e66e7e6ca3fc1435c';
+   const clientKey = 'ab4bccaa1ac408bce96981836699d5a1b9b526becd34500a2dc83a9c35081c6c';
+   const ncmb = new NCMB(applicationKey, clientKey); //APIキーの設定とSDK初期化
+
    document.addEventListener('show', function(event) {
      var page = event.target;
       var titleElement = document.querySelector('#toolbar-title');
@@ -31,7 +35,6 @@
       document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
     }
 	</script>
-  <script src="send.js"></script>
 </head>
 
 <body>
@@ -50,8 +53,8 @@
 	<ons-template id="tab1.html">
 		<ons-page id="first-page">
 			<ons-list>
-       <ons-list-header>101HR</ons-list-header>
-       <ons-list-item id="101HR">予約はありません。</ons-list-item>
+       <ons-list-header id=LoginNow>(ログインしてるHR)</ons-list-header>
+       <ons-list-item id=HR>予約はありません。</ons-list-item>
 			</ons-list>
 		</ons-page>
 	</ons-template>
@@ -62,10 +65,11 @@
        (仮)
       </p>
       <div class="d-inline-flex p-2 ml-1 bd-highlight">
-       <input type="button" value="送信する" class="btn btn-primary btn-lg btn-block" onclick="send();">
+       <input type="button" value="送信する" class="btn btn-primary btn-lg btn-block" onclick="send()">
        <!--クリックしたらsend.jsに送る-->
       </div>
     </ons-page>
   </ons-template>
+ <script src="send.js"></script>
 </body>
 </html>
