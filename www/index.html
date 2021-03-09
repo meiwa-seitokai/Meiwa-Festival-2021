@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">    <!-- bootstrapの実装 -->
 
-	<script>
+	<script id=default>
    const applicationKey = 'fb9bdc1de88d2a7e66af9dce46c0b5211ace58c5921dc29e66e7e6ca3fc1435c';
    const clientKey = 'ab4bccaa1ac408bce96981836699d5a1b9b526becd34500a2dc83a9c35081c6c';
    const ncmb = new NCMB(applicationKey, clientKey); //APIキーの設定とSDK初期化
@@ -79,7 +79,7 @@
       校内マップ
     </ons-button>
       
-    <ons-button modifier="large" id="pamphlet">      
+    <ons-button modifier="large" id="pamphlet">
       デジタルパンフレット
     </ons-button>
       
@@ -127,12 +127,29 @@
 	<ons-page id="situation">
 
 		<ons-list>
-      <ons-list-header id=LoginNow>(ログインしてるHR)</ons-list-header>
-      <ons-list-item id=HR>予約はありません。</ons-list-item>
+      <ons-list-header>予約状況</ons-list-header>
+      <ons-list-item id=ReserveSituation>予約はありません。</ons-list-item>
 		</ons-list>
+
+    <ons-button modifier="large" id="QR">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
+      <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+      <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"></path>
+      </svg>
+      QRコードを読み取る
+    </ons-button>
 
 	</ons-page>
 	</ons-template>
+
+  <!-- 予約確認画面 -->
+  <ons-dialog id="ReserveCheck">
+    (101HR)に予約を送信しますか？<br>
+    (これは仮の文です)
+    <ons-button id="LetSend" onclick="send()">
+    OK!
+    </ons-button>
+  </ons-dialog>
 
   <!-- 発番するところ -->
 	<ons-template id="reception.html">
@@ -159,7 +176,7 @@
   </ons-page>
   </ons-template>
 
- <!-- 校内マップ -->
+  <!-- 校内マップ -->
   <ons-template id="g_map.html">
   <ons-page id="g_map">
 
@@ -182,6 +199,6 @@
 
   </ons-page>
   </ons-template>
-<script src="send.js"></script>    <!-- スプリクト読み込み -->
+<script src="Reserve.js"></script>    <!-- スプリクト読み込み -->
 </body>
 </html>
