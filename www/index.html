@@ -19,32 +19,6 @@
    const clientKey = 'ab4bccaa1ac408bce96981836699d5a1b9b526becd34500a2dc83a9c35081c6c';
    const ncmb = new NCMB(applicationKey, clientKey); //APIキーの設定とSDK初期化
 
-   document.addEventListener('show', function(event) {
-     var page = event.target;
-     var titleElement = document.querySelector('#toolbar-title');
-
-     if (page.id === 'home') {
-
-        //ページ遷移実装
-        page.querySelector('#assign_number').onclick = function() {
-          document.querySelector('#myNavigator').pushPage('g_assign_number.html', {animation: "slide"});};
-        page.querySelector('#show_number').onclick = function() {
-          document.querySelector('#myNavigator').pushPage('g_show_number.html', {animation: "slide"});};
-        page.querySelector('#map').onclick = function() {
-          document.querySelector('#myNavigator').pushPage('g_map.html', {animation: "slide"});};
-        page.querySelector('#pamphlet').onclick = function() {
-          document.querySelector('#myNavigator').pushPage('g_pamphlet.html', {animation: "slide"});};
-        page.querySelector('#ope_login').onclick = function() {
-          document.querySelector('#myNavigator').pushPage('operation.html', {animation: "slide"});};
-        }
-
-      if (page.matches('#situation')) {
-        titleElement.innerHTML = '待ち状況';
-      } else if (page.matches('#reception')) {
-        titleElement.innerHTML = '受付';
-      }
-    });
-
     if (ons.platform.isIPhoneX()) {
       document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
       document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
@@ -53,78 +27,46 @@
 </head>
 
 <body>
-  <ons-navigator swipeable id="myNavigator" page="home.html"></ons-navigator>
+  <ons-navigator swipeable id="myNavigator" page="base.html"></ons-navigator>
+
+  <ons-template id="base.html">
+  <ons-page id="base">
+
+    <ons-tabbar position="bottom">
+			<ons-tab label="Home" page="home.html" icon="fa-home" active>
+			</ons-tab>
+		  <ons-tab label="Map" page="map.html" icon="fa-map-marked-alt">
+			</ons-tab>
+      <ons-tab label="企画に並ぶ" page="situation.html" icon="fa-person-booth">
+			</ons-tab>
+      <ons-tab label="Pampglet" page="pamphlet.html" icon="fa-book-open">
+			</ons-tab>
+      <ons-tab label="Info" page="info.html" icon="fa-info-circle">
+			</ons-tab>
+		</ons-tabbar>
+
+  </ons-page>
+  </ons-template>
 
   <!-- ホーム画面 -->
   <!-- どこかに通知ボックス作りたい -->
   <ons-template id="home.html">
   <ons-page id="home">
-  
+
     <ons-toolbar>
       <div class="center">明和祭2021</div>
     </ons-toolbar>
 
-    <p>企画に並ぶ</p>
-    <ons-button modifier="large" id="assign_number">
-      整理券発番
-    </ons-button>
-
-    <p>企画に入場する</p>
-    <ons-button modifier="large" id="show_number">      
-      整理券提示
-    </ons-button>
-
-    <p>お役立ちメニュー</p>
-    <ons-button modifier="large" id="map">      
-      校内マップ
-    </ons-button>
-      
-    <ons-button modifier="large" id="pamphlet">
-      デジタルパンフレット
-    </ons-button>
-      
-    <ons-button modifier="quiet" id="ope_login">      
-      企画運営者モードにログインする
-    </ons-button>
-
   </ons-page>
-  </ons-template>
-
-
-  <!-- 企画運営者モード -->
-  <ons-template id="operation.html">
-  <ons-page id="operation">
-
-    <ons-toolbar>
-      <div class="left"><ons-back-button>戻る</ons-toolbar-button></div>
-      <div class="center">企画運営者モード</div>
-    </ons-toolbar>
-
-  </ons-page>
-  </ons-template>
-  
-  <!-- 整理券発番 -->
-	<ons-template id="g_assign_number.html">
-  <ons-page id="g_assign_number">
-
-		<ons-toolbar>
-      <div class="left"><ons-back-button>戻る</ons-toolbar-button></div>
-			<div class="center" id="toolbar-title"></div>
-		</ons-toolbar>
-
-		<ons-tabbar position="auto" swipeable="true" modifier="top-border">
-			<ons-tab label="状況" page="situation.html" active>
-			</ons-tab>
-		  <ons-tab label="受付" page="reception.html">
-			</ons-tab>
-		</ons-tabbar>
-
-	</ons-page>
   </ons-template>
 
   <!-- 予約状況 -->
 	<ons-template id="situation.html">
 	<ons-page id="situation">
+
+    <ons-toolbar>
+      <div class="center">企画に並ぶ</div>
+    </ons-toolbar>
 
 		<ons-list>
       <ons-list-header>予約状況</ons-list-header>
@@ -146,42 +88,16 @@
   <ons-dialog id="ReserveCheck">
     (101HR)に予約を送信しますか？<br>
     (これは仮の文です)
-    <ons-button id="LetSend" onclick="send()">
+    <ons-button id="LetSend">
     OK!
     </ons-button>
   </ons-dialog>
 
-  <!-- 発番するところ -->
-	<ons-template id="reception.html">
-	<ons-page id="reception">
-
-		<p align=center;>(仮)</p>
-    <div class="d-inline-flex p-2 ml-1 bd-highlight">
-      <input type="button" value="発番する" class="btn btn-primary btn-lg btn-block" onclick="send()">
-      <!--クリックしたらsend.jsに送る-->
-    </div>
-
-  </ons-page>
-  </ons-template>
-
-  <!-- 整理券提示 -->
-  <ons-template id="g_show_number.html">
-  <ons-page id="g_show_number">
-
-    <ons-toolbar>
-      <div class="left"><ons-back-button>戻る</ons-toolbar-button></div>
-      <div class="center">発番済み整理券</div>
-    </ons-toolbar>
-
-  </ons-page>
-  </ons-template>
-
   <!-- 校内マップ -->
-  <ons-template id="g_map.html">
-  <ons-page id="g_map">
+  <ons-template id="map.html">
+  <ons-page id="map">
 
     <ons-toolbar>
-      <div class="left"><ons-back-button>戻る</ons-toolbar-button></div>
       <div class="center">校内MAP</div>
     </ons-toolbar>
 
@@ -189,16 +105,27 @@
   </ons-template>
 
   <!-- デジタルパンフレット -->
-  <ons-template id="g_pamphlet.html">
-  <ons-page id="g_pamphlet">
+  <ons-template id="pamphlet.html">
+  <ons-page id="pamphlet">
 
     <ons-toolbar>
-      <div class="left"><ons-back-button>戻る</ons-toolbar-button></div>
       <div class="center">デジタルパンフレット</div>
     </ons-toolbar>
 
   </ons-page>
   </ons-template>
+
+  <!-- Info (企画運営者モード) -->
+  <ons-template id="info.html">
+  <ons-page id="info">
+
+    <ons-toolbar>
+      <div class="center">Info (企画運営者モード)</div>
+    </ons-toolbar>
+
+  </ons-page>
+  </ons-template>
+
 <script src="Reserve.js"></script>    <!-- スプリクト読み込み -->
 </body>
 </html>
