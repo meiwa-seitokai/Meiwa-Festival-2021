@@ -66,11 +66,20 @@
 
     <ons-toolbar>
       <div class="center">企画に並ぶ</div>
+      <div class="right">
+      <ons-toolbar-button id="GetReserve">
+        <ons-icon icon="fa-retweet"></ons-icon>
+      </ons-toolbar-button>
+      </div>
     </ons-toolbar>
 
 		<ons-list>
       <ons-list-header>予約状況</ons-list-header>
-      <ons-list-item id=ReserveSituation>予約はありません。</ons-list-item>
+      <div id=ReserveSituation>
+        <ons-list-item>
+        予約はありません。
+        </ons-list-item>
+      </div>
 		</ons-list>
 
     <ons-button modifier="large" id="QR">
@@ -83,6 +92,13 @@
 
 	</ons-page>
 	</ons-template>
+
+  <!-- ローディング画面 -->
+  <ons-modal direction="up">
+  <div style="text-align: center">
+    <p><ons-icon icon="md-spinner" size="28px" spin></ons-icon> Loading... </p>
+  </div>
+  </ons-modal>
 
   <!-- 予約確認画面 -->
   <ons-dialog id="ReserveCheck">
