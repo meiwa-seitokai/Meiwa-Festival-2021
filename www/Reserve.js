@@ -1,5 +1,4 @@
-let reserveNum = 0;
-//仮で現在の予約番号  (todo : 取得できるようにする)
+let GetReserveInfo = ncmb.DataStore("PgmClass");
 
 //ローディング画面
 function showModal() {
@@ -23,6 +22,14 @@ document.addEventListener('show', function(event) {
     showModal()
     scan()
   }
+}
+
+  if (page.id === "info") {
+
+  //運営者モード
+  document.getElementById("GoLogin").onclick = function() {
+    document.getElementById('myNavigator').pushPage('Login.html')
+  }
 
 }});
 
@@ -30,7 +37,6 @@ document.addEventListener('show', function(event) {
 //データ取得
 function Information() {
   var tableSource = "";
-  let GetReserveInfo = ncmb.DataStore("PgmClass");
   GetReserveInfo.order("ID").fetchAll()
                 .then(function(results){
   for (var i = 0; i < results.length; i++) {
@@ -102,10 +108,26 @@ function scan() {
 }
 
 function check(Raw_Destination) {
+  let reserveNum = ""; 
+
   console.log(Raw_Destination);
   let destination = Raw_Destination.split(/[\n\r:]/);
   destination = destination[1]
   console.log(destination)  //送信先決定
+
+  //予約番号取得
+  GetReserveInfo.equalTo("MO", destination).order("PgmIn").fetchAll()
+                .then(function(results){
+    for (var i = 0; i < results.length; i++) {
+      let TmpInfo = results[i]
+      TmpInfo = TmpInfo.PgmIn
+      reserveNum += TmpInfo
+      console.log("Before" + reserveNum);
+    }})
+                .catch(function(err){
+    alert("接続に失敗しました。ネットワーク接続を確認してください。" + "\n" + error.code);
+    })
+  
 
   //ダイアログ表示
   document
@@ -120,21 +142,33 @@ function check(Raw_Destination) {
     .hide();
 
     reserveNum++;
-    console.log(reserveNum);
- 
-    //二フクラに送信
-    let SendTo = "Reserve_" + destination
-    //console.log(SendTo)
+    console.log("After" + reserveNum);
 
-    let Reserve = ncmb.DataStore(SendTo);
-    let reserve = new Reserve();
-    reserve.set("reserveNum", reserveNum)
-           .save()
-           .then(function(reserve){
-             console.log("Save Succeed!")
-           })
-           .catch(function(err){
-             console.log("Save Failed!")
-           });
+    //予約送信
+    GetReserveInfo.equalTo("MO", destination).fetch()
+      .then(function(reserve){
+        reserve.set("PgmIn", reserveNum);
+        console.log("Save Succeed!")
+        return reserve.update();
+      })
+      .catch(function(err){
+        alert("データを取得できませんでした。ネットワーク接続を確認してください。" + "\n" + error.code);
+      });
   }
 };
+
+
+//ログイン
+function Login() {
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+
+  ncmb.User.login(username, password)
+  .then(function(data){
+    ons.notification.alert('Congratulations!');
+    document.getElementById('myNavigator').pushPage('Change.html')
+  })
+  .catch(function(err){
+    ons.notification.alert('Incorrect username or password.');
+  });
+}

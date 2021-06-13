@@ -137,6 +137,47 @@
 
     <ons-toolbar>
       <div class="center">Info (企画運営者モード)</div>
+      <div class="right">
+      <ons-toolbar-button id="GoLogin">
+        <ons-icon icon="fa-sign-in-alt"></ons-icon>
+      </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+
+  </ons-page>
+  </ons-template>
+
+  <!-- ログインページ -->
+  <ons-template id="Login.html">
+  <ons-page id="Login">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">ログイン</div>
+    </ons-toolbar>
+
+    <div style="text-align: center; margin-top: 30px;">
+    <p>
+      <ons-input id="username" modifier="underbar" placeholder="Username" float></ons-input>
+    </p>
+    <p>
+      <ons-input id="password" modifier="underbar" type="password" placeholder="Password" float></ons-input>
+    </p>
+    <p style="margin-top: 30px;">
+      <ons-button onclick="Login()">Sign in</ons-button>
+    </p>
+    </div>
+
+  </ons-page>
+  </ons-template>
+
+  <!-- 管理者画面 -->
+  <ons-template id="Change.html">
+  <ons-page id="Change">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">予約管理画面</div>
     </ons-toolbar>
 
   </ons-page>
