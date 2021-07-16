@@ -1,3 +1,5 @@
+//v1.0.0 完成 2021/07/15 15:06
+
 let GetReserveInfo = ncmb.DataStore("PgmClass");
 
 //ローディング画面
@@ -167,8 +169,67 @@ function Login() {
   .then(function(data){
     ons.notification.alert('Congratulations!');
     document.getElementById('myNavigator').pushPage('Change.html')
+
   })
+
   .catch(function(err){
     ons.notification.alert('Incorrect username or password.');
   });
 }
+
+document.addEventListener('show', function(event) {
+  let page = event.target;
+  if (page.id === "Change") {
+    GetChange()
+}});
+
+function GetChange() {
+    //ログインユーザー表示
+    let currentUser = ncmb.User.getCurrentUser()
+    let LoginUser = currentUser.get("MO")
+    console.log("ログイン中のユーザー:" + LoginUser);
+    document.getElementById("Logining").innerHTML = LoginUser + "管理画面";
+
+    //予約取得（一件だけなのでこの処理で良い）
+    GetReserveInfo.equalTo("MO", LoginUser).order("PgmIn").limit(1).fetchAll()
+    .then(function(results){
+      for (var i = 0; i < results.length; i++) {
+        let ChangePeople = results[i];
+        let ChangeWaitPeople = ChangePeople.PgmIn
+        let ChangeExitPeople = ChangePeople.PgmGn
+        let ChangeNowPeople = ChangeWaitPeople - ChangeExitPeople
+        console.log("HR人数" + ChangeNowPeople);
+
+        let ChangeSituationText = "入場 " + ChangeWaitPeople + " 組" + "出場 " + ChangeExitPeople + " 組";
+        document.getElementById("ChangeSituation").innerHTML = ChangeSituationText;
+}})};
+
+//できたあああああああああああ
+function SendPeople() {
+  GetChange()
+  let currentUser = ncmb.User.getCurrentUser()
+  let LoginUser = currentUser.get("MO")
+
+  let GetSituation = document.getElementById("ChangeSituation").textContent
+  GetSituation = GetSituation.split(" ")
+  let SendWaitPeople = GetSituation[1]
+  let SendExitPeople = GetSituation[3]
+  SendExitPeople++;
+
+  if (SendExitPeople > SendWaitPeople) {
+    alert("エラー！\nホームルーム内の人数がマイナスになっています！");
+    SendExitPeople--;
+    return;
+  }
+
+GetReserveInfo.equalTo("MO", LoginUser).fetch()
+  .then(function(results){
+    results.set("PgmGn", SendExitPeople)
+    results.update();
+    document.getElementById("myNavigator").popPage();
+  })
+  .catch(function(err){
+    alert("データを送信できませんでした。ネットワーク接続を確認してください。\n" + error.code);
+    return;
+  });
+};
