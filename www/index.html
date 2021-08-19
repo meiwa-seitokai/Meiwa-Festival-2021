@@ -35,7 +35,7 @@
     <ons-tabbar position="bottom">
 			<ons-tab label="Home" page="home.html" icon="fa-home" active>
 			</ons-tab>
-		  <ons-tab label="Map" page="map.html" icon="fa-map-marked-alt">
+		  <ons-tab label="Map" page="MyMap.html" icon="fa-map-marked-alt">
 			</ons-tab>
       <ons-tab label="企画に並ぶ" page="situation.html" icon="fa-person-booth">
 			</ons-tab>
@@ -90,6 +90,11 @@
       QRコードを読み取る
     </ons-button>
 
+    <ons-list modifier="inset" id="SaveReserve">
+      <ons-list-header>整理券情報</ons-list-header>
+      <ons-list-item modifier="longdivider"></ons-list-item>
+    </ons-list>
+
 	</ons-page>
 	</ons-template>
 
@@ -100,22 +105,15 @@
   </div>
   </ons-modal>
 
-  <!-- 予約確認画面 -->
-  <ons-dialog id="ReserveCheck">
-    (101HR)に予約を送信しますか？<br>
-    (これは仮の文です)
-    <ons-button id="LetSend">
-    OK!
-    </ons-button>
-  </ons-dialog>
-
   <!-- 校内マップ -->
-  <ons-template id="map.html">
-  <ons-page id="map">
+  <ons-template id="MyMap.html">
+  <ons-page id="MyMap">
 
     <ons-toolbar>
       <div class="center">校内MAP</div>
     </ons-toolbar>
+
+    <div id="map"></div>
 
   </ons-page>
   </ons-template>
@@ -171,26 +169,39 @@
   </ons-page>
   </ons-template>
 
-  <!-- 管理者画面 -->
+  <!-- 管理画面 -->
+  <ons-template id="Admin.html">
+  <ons-page id="Admin">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center" id="Logining1">管理画面</div>
+    </ons-toolbar>
+
+    <p style="margin-top: 15px;">
+    <ons-button modifier="large" onclick="PushChange()">入場管理画面</ons-button>
+    </p>
+  </ons-page>
+  </ons-template>
+
+  <!-- 入場管理画面 -->
   <ons-template id="Change.html">
   <ons-page id="Change">
 
     <ons-toolbar>
       <div class="left"><ons-back-button>戻る</ons-back-button></div>
-      <div class="center" id="Logining">
-        予約管理画面
-      </div>
+      <div class="center" id="Logining2">予約管理画面</div>
     </ons-toolbar>
 
-    <div id="ChangeSituation">入場  組    出場  組</div>
+    <div style="text-align: center; margin-top: 30px;" id="ChangeSituation">入場  組    出場  組</div>
 
-    <ons-button id="SendPeople" onclick="SendPeople();">
-      退出
-    </ons-button>
+    <p style="text-align: center; margin-top: 30px;">
+    <ons-button id="SendPeople" onclick="SendPeople();">退出</ons-button>
+    </p>
 
   </ons-page>
   </ons-template>
 
-<script src="Reserve.js"></script>    <!-- スプリクト読み込み -->
+<script src="Reserve.js"></script><!-- スプリクト読み込み -->
 </body>
 </html>
