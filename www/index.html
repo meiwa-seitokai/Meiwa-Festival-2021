@@ -39,7 +39,7 @@
 			</ons-tab>
       <ons-tab label="企画に並ぶ" page="situation.html" icon="fa-person-booth">
 			</ons-tab>
-      <ons-tab label="Pampglet" page="pamphlet.html" icon="fa-book-open">
+      <ons-tab label="Pamphlet" page="pamphlet.html" icon="fa-book-open">
 			</ons-tab>
       <ons-tab label="Info" page="info.html" icon="fa-info-circle">
 			</ons-tab>
@@ -74,7 +74,7 @@
     </ons-toolbar>
 
 		<ons-list>
-      <ons-list-header>予約状況</ons-list-header>
+      <ons-list-header>混雑状況</ons-list-header>
       <div id=ReserveSituation>
         <ons-list-item>
         予約はありません。
@@ -105,6 +105,7 @@
   </div>
   </ons-modal>
 
+
   <!-- 校内マップ -->
   <ons-template id="MyMap.html">
   <ons-page id="MyMap">
@@ -113,10 +114,55 @@
       <div class="center">校内MAP</div>
     </ons-toolbar>
 
-    <div id="map"></div>
+    <ons-bottom-toolbar>
+      <div style="text-align: center">
+      <ons-segment id="segment" tabbar-id="tabbar" style="width: 85%">
+        <button>1階</button>
+        <button>2階</button>
+        <button>3階</button>
+        <button>4階</button>
+      </ons-segment>
+      </div>
+    </ons-bottom-toolbar>
+
+    <ons-tabbar id="tabbar">
+      <ons-tab page="map1.html" active></ons-tab>
+      <ons-tab page="map2.html"></ons-tab>
+      <ons-tab page="map3.html"></ons-tab>
+      <ons-tab page="map4.html"></ons-tab>
+    </ons-tabbar>
 
   </ons-page>
   </ons-template>
+
+  <!-- 1階 -->
+  <template id="map1.html">
+  <ons-page>
+    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map1.pdf" type="application/pdf" width="200%" height="90%">
+  </ons-page>
+  </template>
+
+  <!-- 2階 -->
+  <template id="map2.html">
+  <ons-page>
+    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map2.pdf" type="application/pdf" width="200%" height="90%">
+  </ons-page>
+  </template>
+
+  <!-- 3階 -->
+  <template id="map3.html">
+  <ons-page>
+    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map3.pdf" type="application/pdf" width="200%" height="90%">
+  </ons-page>
+  </template>
+
+  <!-- 4階 -->
+  <template id="map4.html">
+  <ons-page>
+    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map4.pdf" type="application/pdf" width="200%" height="90%">
+  </ons-page>
+  </template>  
+
 
   <!-- デジタルパンフレット -->
   <ons-template id="pamphlet.html">
@@ -125,6 +171,8 @@
     <ons-toolbar>
       <div class="center">デジタルパンフレット</div>
     </ons-toolbar>
+
+    <div id="pamp"></div>
 
   </ons-page>
   </ons-template>
@@ -202,6 +250,7 @@
   </ons-page>
   </ons-template>
 
-<script src="Reserve.js"></script><!-- スプリクト読み込み -->
+<script src="Reserve.js"></script>
+<script src="pdf.js"></script><!-- スプリクト読み込み -->
 </body>
 </html>
