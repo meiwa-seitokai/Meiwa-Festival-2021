@@ -72,18 +72,19 @@ function Information() {
     }
 
     let SaveReserve = localStorage.getItem(ReserveInfo.MO)
+    let showTF = 1
 
     if (SaveReserve === null) {
-      SaveReserve = "empty"
+      showTF = 0
     }else{
       console.log(SaveReserve)
     }
 
-    if (SaveReserve >= ReserveInfo.OUT) {
-      ReserveSource += '<ons-list-header id=' + i + '>' + ReserveInfo.MO + '</ons-list-header>\n<ons-list-item modifier="longdivider">' + SaveReserve + '</ons-list-item>';
+    if (SaveReserve >= ReserveInfo.OUT && showTF === 1) {
+      ReserveSource += '<ons-list-header id=' + i + '>' + ReserveInfo.MO + '</ons-list-header>\n<ons-list-item modifier="longdivider">' + SaveReserve + '番</ons-list-item>';
     }
 
-    if (SaveReserve < ReserveInfo.OUT) {
+    if (SaveReserve < ReserveInfo.OUT && showTF === 1) {
       localStorage.removeItem(ReserveInfo.MO);
       console.log("削除したよ")
     }

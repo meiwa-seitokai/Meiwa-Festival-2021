@@ -15,9 +15,9 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">    <!-- bootstrapの実装 -->
 
 	<script id=default>
-   const applicationKey = 'fb9bdc1de88d2a7e66af9dce46c0b5211ace58c5921dc29e66e7e6ca3fc1435c';
-   const clientKey = 'ab4bccaa1ac408bce96981836699d5a1b9b526becd34500a2dc83a9c35081c6c';
-   const ncmb = new NCMB(applicationKey, clientKey); //APIキーの設定とSDK初期化
+    const applicationKey = 'fb9bdc1de88d2a7e66af9dce46c0b5211ace58c5921dc29e66e7e6ca3fc1435c';
+    const clientKey = 'ab4bccaa1ac408bce96981836699d5a1b9b526becd34500a2dc83a9c35081c6c';
+    const ncmb = new NCMB(applicationKey, clientKey); //APIキーの設定とSDK初期化
 
     if (ons.platform.isIPhoneX()) {
       document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
@@ -53,9 +53,476 @@
   <ons-template id="home.html">
   <ons-page id="home">
 
+    <style>
+    .homeBottons{
+    position: relative;
+    height: 100%;
+    }
+
+    .Title{
+    position: absolute;
+    top: 0%;
+    left: 0%; 
+    z-index:100;
+    }
+
+    .timeButton{
+    position: absolute;
+    bottom: 2vh;
+    right: 5vw;
+    z-index: 102;
+    }
+
+    .musicButton{
+    position: absolute;
+    bottom: 2vh;
+    right: 40vw;
+    z-index: 102;
+    }
+
+    .HRinfopct1-1{
+    position: absolute;
+    top: 15vh;
+    left: 0vw;
+    height: 22vh;
+    z-index:100;
+    }
+
+    .HRinfopct1-2{
+    position: absolute;
+    top: 20vh;
+    right: 0vw;
+    width: 50%;
+    z-index:99;
+    }
+
+    .HRinfopct2-1{
+    position: absolute;
+    top: 43vh;
+    right: 0vw;
+    height: 22vh;
+    z-index: 100;
+    }
+
+    .HRinfopct2-2{
+    position: absolute;
+    top: 44vh;
+    left: 0vw;
+    width: 50%; 
+    z-index:99;
+    }
+
+    .HRinfoButton1{
+    position: absolute;
+    top: 15vh;
+    left: 0vw;
+    width: 100%;
+    height: 23vh;
+    z-index: 101;
+    opacity: 0.5;
+    }
+
+    .HRinfoButton2{
+    position: absolute;
+    top: 42vh;
+    left: 0vw;
+    width: 100%;
+    height: 23vh;
+    z-index: 101;
+    opacity: 0.5;
+    }
+
+    </style>
+
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
+    <div class="homeBottons">
+
+      <div id="Title">
+        <img src="contents/Home/TitleFlame.png" width="100%" class="Title">
+      </div>
+
+      <ons-button modifier="quiet" onclick="popTimes()" class="timeButton">
+        <img src="contents/Home/timeIcon.png">
+      </ons-button>
+
+      <ons-button modifier="quiet" onclick="popMusic()" class="musicButton">
+        <img src="contents/Home/musicIcon.png">
+      </ons-button>
+
+      <ons-button modifier="quiet" onclick="popHRinfo()" class="HRinfoButton1"></ons-button>
+
+      <img src="contents/Home/HRinfo.png" class="HRinfopct1-1">
+
+      <img src="contents/Home/wallaby.png" class="HRinfopct1-2">
+
+      <ons-button modifier="quiet" onclick="popHRinfo2()" class="HRinfoButton2"></ons-button>
+
+      <img src="contents/Home/HRinfo2.png" class="HRinfopct2-1">
+
+      <img src="contents/Home/HRpct.jpg" class="HRinfopct2-2">
+
+    </div>
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="timeTable.html">
+  <ons-page id="timeTable">
+
     <ons-toolbar>
-      <div class="center">明和祭2021</div>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">タイムテーブル</div>
     </ons-toolbar>
+
+    <div id="timeTable1"></div>
+
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="homeInfo.html">
+  <ons-page id="homeInfo">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">
+
+        <ons-segment id="segment" tabbar-id="Infos" style="width: 100%">
+          <button>HR企画</button>
+          <button>劇</button>
+          <button>部活有志</button>
+        </ons-segment>
+
+      </div>
+    </ons-toolbar>
+
+    <ons-tabbar id="Infos">
+      <ons-tab page="HRinfo.html" active></ons-tab>
+      <ons-tab page="Playinfo.html"></ons-tab>
+      <ons-tab page="Clubinfo.html"></ons-tab>
+    </ons-tabbar>
+  
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="HRinfo.html">
+  <ons-page id="HRinfo">
+
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
+    <ons-list-item>
+        <img src="contents/Home/101.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">101HR</span>「GO TO SPACE」</span><span class="list-item__subtitle">20XX年後, 人類は, 再びウイルスの脅威に侵されていた…! 残された人類は, 宇宙の果て, 「セカンドアース」を目指して, 壮大な冒険に旅立つのであった…。さあ, 君の全てを駆使して, Let's "GO TO SPACE" !</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/102.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/102.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">102HR</span>「明プリーグ」</span><span class="list-item__subtitle">みなさんは明和高校の人気番組、｢明プリーグ｣の撮影現場の見学中。ところがなんと！出演者が突如失踪してしまい、代わりに出演することになった！数々のアトラクションを通して失踪の謎を暴くことはできるのか...。102で待ってます！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/103.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/103.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">103HR</span>「Hurry Hotterと炎のゴブレット」</span><span class="list-item__subtitle">103HRのメンバー全員が夏休みなどを使って一生懸命作り上げてきた企画です！Harry Potterと炎のゴブレットの世界観を明和ver.に103HRがアレンジしました！タイトルはHarry Potterを基に急いで課題をクリアして仲間と共に熱くなれ！という意味を加えてHurry Hotterにしました！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/104.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/104.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">104HR</span>「いきなりシャテーキ」</span><span class="list-item__subtitle">いらっしゃいませ！当店では、射的をお楽しみいただけます。＊ステーキではなくシャテーキです。そのため、マスクの着用をお願いします。おすすめのトッピングはクイズです。射的で夏祭り気分味わいたくないですか！！！それではご案内します。</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/105.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/105.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">105HR</span>「When You Wish Upon a Ster 〜夢の国からの脱出〜」</span><span class="list-item__subtitle">教室に入ると、そこはまさに”夢の国”だった。３つのテーマに沿ったクイズを解き進めながら、ディズニー気分を存分に味わいましょう☆ﾐ<br>あなたはここから脱出できるのか…？</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/106.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">106HR</span>「VS…??」</span><span class="list-item__subtitle">言わずと知れた超人気番組を、106HRの色にアレンジ！テレビでおなじみのゲームに加えて、オリンピックにちなんだクイズも沢山用意して待っています！いまならではの楽しみを味わえる106ワールドで、明和に嵐を巻き起こして見せましょう！！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/107.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/107.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">107HR</span>「約束のヒャッハーランド」</span><span class="list-item__subtitle">ここはあなたたち“孤児”が暮らしている「孤児院」。ここではみんなが本当の家族のように暮らしていた…はずだった。実際はここは外の世界に暮らす化け物のための“餌”を育てている「農園」だった。あなたたちは生き残るために脱出し、自由を掴みとれ！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/108.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/108.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">108HR</span>「さくらさく平安御簾テリー」</span><span class="list-item__subtitle">私たちの企画は平安時代をリアルに表現し、その中でクイズを行います。内装、クイズなど全てにおいて興味をそそるようなそんな企画になってます！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/109.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/109.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">109HR</span>「音を立てるな〜109からの脱出〜」</span><span class="list-item__subtitle">さぁみなさん、ここからは静粛に、お静かに、 Quiet pleaseでお願いします。この教室から出るまでは、決して音を出してはいけません。貴方が無事、脱出することができますように…</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/201.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/201.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">201HR</span>「ワンデイ・ジョーンズ」</span><span class="list-item__subtitle">博士から、遺跡調査でお宝を発掘してほしいとの依頼が届いた。一日探検家体験のチャンス！ところが、お宝を盗まれる事件に巻き込まれた挙句、洞窟に閉じ込められてしまい・・・あなたは無事に遺跡を脱出し、お宝を持ち帰ることができるのか？</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/202.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/202.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">202HR</span>「奇想の館、赤い壁」</span><span class="list-item__subtitle">｢失踪したご主人様を見つけてください｣<br><br>ある日、探偵であるあなたの元へ一件の依頼が届いた。どうやら豪邸の主が失踪したらしい。果たして主はどこへ行ってしまったのか、何の目的なのか。君は数少ない手がかりを元に、この謎を解けるか！？</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/203.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/203.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">203HR</span>「明和のアソビ大全」</span><span class="list-item__subtitle">203HRにいろんなアソビが集結！アソビをたくさんクリアして明和のアソビ王になろう！！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/204.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">204HR</span>「Google入社試験」</span><span class="list-item__subtitle">貴方はGoogle入社を目指す高校三年生。 その入社試験は知識だけではなく、思考力や頭の柔軟を問う難問が出題されるそうだ。 貴方は無事、大学受験という大きな試練を乗り越え、夢のエリートコースへ乗ることが出来るのか！？</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/205.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">205HR</span>「ネバーランド殺人事件」</span><span class="list-item__subtitle">私はティンカーベル。最近夢の国ではフック船長が好き勝手やってる。ピーターパンも逆らえないのは結局ここでも上下関係があるからなのかも。上に立つ者は下の者を殺しかねない。この歪んだネバーランドはどうなっちゃうのかしら。見物ね…</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/206.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/206.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">206HR</span>「人生ゲーム  ー吉原の乱ー」</span><span class="list-item__subtitle">みんな大好き206の担任､吉原の壮絶な人生を体感しよう！山あり谷ありな先生の人生には様々な困難が立ちはだかる…吉原の運命はあなた次第､､､目指せ！一攫千金！！<br><br>☆人生はまさにルーレット！あなた次第で吉原の運命はどん底にも天上にも動きます！（訳：何度来ても楽しめます）吉原の人生はグループで体感するも良し、一人で体感するも吉！！☆</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/207.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/207.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">207HR</span>「I AM AI」</span><span class="list-item__subtitle">あなたは、未来の世界を想像できるだろうか。時は××世紀、AIは飛躍的な進化を遂げた。<br>〜近未来×エンド分岐〜<br>あなたの選択で運命が変わる――――</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/208.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">208HR</span>「SUPER MARIO INFNITY」</span><span class="list-item__subtitle">マリオの世界へようこそ。すべてのゲームで決まる世界。求められるのは知略か体力か、はたまた運か。クッパ一族の侵略によって滅亡寸前のキノコ一族。ピーチ姫を助け、キノコの王国を救うためのゲームに挑め。</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/209.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">209HR</span>「音楽科格付けチェック」</span><span class="list-item__subtitle">こんにちは！私たちの企画、｢音楽科格付けチェック｣はどちらがより高価な楽器の音であるかを当てるなど、音楽の専門的な知識がない方も楽しめるクイズになっています。あなたも209に来て、一流音楽家を目指してみませんか？<br><br>☆専門的な知識や技能を必要とするクイズは無いので、おひとり様からグループまでどなたでも気軽に参加することができます！☆</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/309.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/309.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">309HR</span>「ムジカラボ」<br>場所：視聴覚室</span><span class="list-item__subtitle">チーム◯ボのような最新技術がなくたって、私たちには音楽がある！聴いて良し、インスタ映え良しの癒しの空間ムジカラボ。日々頑張る明和生を、視覚で、聴覚で、309が癒します！<br><br>☆・クラシックからディズニー、ジブリ、ポップスまで…様々なジャンルのプログラムを、音楽科の演奏でお届けします！ぜひ、あなたの好きなジャンルの部門に視聴覚室へお越し下さい！<br>・演奏を聴いたあとは、バルーンに囲まれたインスタ映えスポットで写真取り放題！<br>・インスタ映えスポットのみの開放時間あり☆</span>
+    </ons-list-item>
+
+  </ons-page>
+  </ons-template>
+
+
+  <ons-template id="Playinfo.html">
+  <ons-page id="Playinfo">
+
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/301.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/301.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">301HR</span>「ショーシャンクの空に」<br>日程：9月26日(日) 11:15~12:00</span><span class="list-item__subtitle">銀行員のアンディは無実の罪でショーシャンク刑務所行きに。そこの囚人たちは皆劣悪な環境に慣れ、全てを諦めてしまっていた。だがアンディだけは希望を失わず、やがてある行動に出る。<br>―― Get busy living , or get busy dying.</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/302.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">302HR</span>「Snow Magic Fantasy」<br>日程：9月25日(土) 12:15~13:00</span>昔々あるところに、スノーランドという王国がありました。一年中雪の降るこの国でおびえながら暮らす人々は、雪の原因とどう向き合うのか―。これは、そんなスノーランドで1人の青年と少女が出会い始まった、世界一あたたかい雪の物語。<span class="list-item__subtitle"></span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/303.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">303HR</span>「West Side Story」<br>日程：9月25日(土) 13:15~14:00</span><span class="list-item__subtitle">1950年代、差別と偏見が渦巻くアメリカ、マンハッタン。いがみ合う不良集団に属するトニーとマリアは禁断の恋に落ちるが、若者達の運命はある日の決闘から狂っていく... 愛は憎しみに勝てるのか、感動の現代版ロミオとジュリエット！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/304.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/304.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">304HR</span>「白雪姫？YOU CAN FLY！」<br>日程：9月26日(日) 10:15~11:00</span><span class="list-item__subtitle">ここはとある童話の世界。ピーターパンと共に空を飛ぶのは…白雪姫！？優しい魔女の正体は実は…！？フック船長がガラスの靴の主を探していると…おや？どこからかワニがやってきたようです！もうてんやわんやの大騒ぎ!皆の運命はいかに……</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/305.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/305.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">305HR</span>「思い出を売る男」<br>日程：9月26日(日) 12:15~13:00</span><span class="list-item__subtitle">戦争で記憶を失った男は、行きつけの喫茶店のマスターがもつ不思議な力をきっかけに、記憶を取り戻す旅に出る。男はだんだん過去の記憶を思い出していくが、その過去とは一体…。そして、親身になってくれるマスターの秘密とは…？　衝撃のラストを見逃すな！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/306.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">306HR</span>「リメンバー・ミー
+」<br>日程：9/25(土) 11:15~12:00</span><span class="list-item__subtitle">ミュージシャンを夢見る少年、ミゲルはある日死者の国に迷い込んでしまう。そんな彼に手を差し伸べたのは陽気だけど孤独なガイコツ、ヘクター。やがて明らかになる2人の出会いの秘密。その謎を解く鍵は名曲「リメンバー・ミー」に隠されていた…</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/307.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/307.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">307HR</span>「かがみの孤城」<br>日程：9月26日(日) 9:15~10:00</span><span class="list-item__subtitle">学校での居場所をなくし、閉じこもっていた“こころ”の目の前で、ある日突然部屋の鏡が光り始めた。鏡をくぐった先にあったのは、不思議なお城。そこには“こころ”を含め、7人の中学生が集められていた。なぜこの7人が、なぜこの場所に。こころの運命は？</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/308.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">308HR</span>「The Tempest ―W.シェイクスピア―」<br>日程：9/25(土) 14:15~15:00</span><span class="list-item__subtitle">ミラノ公国の王プロスペローは、邪悪な弟に謀られ、幼いミランダと共に島へ流される。 時が経ち、弟らが乗る船が島へ近づきついに復讐劇が幕を開ける… これは、純愛と復讐、慈悲が織り成すあまりにも美しいシェイクスピア最後の物語。</span>
+    </ons-list-item>
+
+
+  </ons-page>
+  </ons-template>
+
+
+  <ons-template id="Clubinfo.html">
+  <ons-page id="Clubinfo">
+
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/shogi.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/shogi.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">将棋部</span>「将棋処」<br>場所：北館3階物理講義室</span><span class="list-item__subtitle">藤井王位の活躍が著しい最近の将棋界ですが、実は明和祭にもその波がやってきております。北館3階物理講義室に将棋盤やどうぶつしょうぎが置いてあるのです！初心者の方も将棋マニアの方も気軽にお越しください！将棋部員との対局もウェルカムです！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/tea.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/tea.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">茶華道部</span>「ドライフラワーとレジンで小物作り＆花展会」<br>場所：本館3階和室</span><span class="list-item__subtitle">茶華道部は、2日目と3日目に小物作り体験を行います。UVレジンを使ったキーホルダーやヘアゴムを作ることが出来ます。数量限定ですのでお早めにお越しください。また、茶道のお点前を行ったり、生け花やお茶碗を飾ったりします。ぜひ来てください！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/kyudo.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/kyudo.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">弓道部</span>「試射会」<br>場所：弓道場(テニスコート、バレーボールコートの隣)</span><span class="list-item__subtitle">こんにちは、弓道部です。今回の文化祭では、本物の弓と矢を使って弓を引くことのできる、試射会というものを実施しようと思います。「まったく弓道なんて知らないよ」という方でも大歓迎です。ぜひ、弓道の楽しさに触れてみませんか?</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/PM.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/PM.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">PM部</span>「PM LIVE 2021」<br>場所：社会科講義室</span><span class="list-item__subtitle">こんにちはPM部です！今年のPM部は北館4階、突き当たりにある社会科講義室でライブをします！1年2年合わせて計12バンドが交代で演奏します！Twitterもやっているので、バンドごとのタイムテーブルを確認の上、非現実感を体験しに来て下さい！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/brass.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/brass.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">吹奏楽部</span>「Meiwa Concertband Stage」<br>場所：明和館</span><span class="list-item__subtitle">やっほい吹奏楽部です(*^▽^*)<br>このステージでは私たちが夏のコンクール で演奏した曲をはじめ、今年流行ったアニメソングや定番のアノ曲まで色々な曲をお届します♡<br>様々な試練があった夏を乗り越えて、より一層進化した私たちのサウンドをお楽しみください♪</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/broadcast.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">放送部</span>「MEIWA HOT 100」<br>場所：特設ステージ</span><span class="list-item__subtitle">こんにちは、放送部です！今年も明和生に人気の曲を2日に分けて100曲ご紹介します！今年は昨年と違い、ジャンル別となっています✨あなたの好きな曲もランクインしているかも…？ 1日目は11:00、2日目は10:30スタートです！ぜひ特設ステージへ！！！！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/chemistry.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/chemistry.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">SSH部化学班</span>「化学の錬金術師」<br>場所：化学講義室</span><span class="list-item__subtitle">今回はシャー芯の表面を金銀銅色に変える実験を通して皆さんに錬金術師になってもらいます。金色に変えるのは難しいけど10回までチャレンジできるので友達とどっちが先にできるか勝負したりして楽しんでね！爆発する実験とかも色々あるのでぜひ来てください！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/biology.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/biology.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">SSH部生物班</span>「SSH biology」<br>場所：西館１階大会議室</span><span class="list-item__subtitle">こんにちは！SSH生物班です。今回私たちは葉脈標本の展示を行います。さらに、来ていただいた方は自分オリジナルの標本を作ることもできます！少しでも興味を持ったそこのあなた、是非大会議室に足を運んでみてはどうでしょうか？</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/mathematics.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/mathematics.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">SSH部数学班</span>「SSH Mathematics」<br>場所：西館１階大会議室</span><span class="list-item__subtitle">今年はＳＳＨ部全体で協力して企画を行います。今回は、例年通りのポスター発表に加え、新しい試みの、ＳＳＨ部全体でのミニゲームを開催します。本館から少し離れた西館一階の大会議室での実施です。大会議室、涼しくなっていますのでぜひぜひ来てください！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/art.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/art.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">美術部</span>「芸術の万華鏡 ～明美展～」<br>場所：本館3階美術室</span><span class="list-item__subtitle">私たち美術部は人数は少ないですが、毎日楽しく活動しています。明和祭では、段ボールクラフト、さらに、普段使っている道具を触ったりできます。本館3F美術室で待っています。美術部を見捨てていくのはmistake!!</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/literature.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/literature.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">文藝部</span>「芸術の万華鏡 ～文藝書房～」<br>場所：本館3階美術室</span><span class="list-item__subtitle">こんにちは。暑さにやられたそこのあなたも、仕事に疲れたそこのあなたも、どうですか、美術室。文藝部のみならず、華やぐ文化部を見ることができます。来て損はしないと思いますよ。</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/book.png" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/Home/book.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">図書部</span>「芸術の万華鏡 ～しおり工房～」<br>場所：本館3階美術室</span><span class="list-item__subtitle">図書部では、新刊本の紹介としおり作りを行います。新刊本の中から各部員が選んだお勧めの一冊が勢揃い！個性豊かなポップも合わせてお楽しみください♪しおり工房では、可愛いテープやシール等を使ってオリジナルのしおり製作が楽しめます！</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <img src="contents/Home/calligraphy.jpg" width="98%" height="60%" onerror="this.onerror=null;this.src='contents/kari.png'">
+        <span class="list-item__title"><span style="margin-right: 25px;">書道部 〈特設〉</span>「It's 書 time!!」<br>場所：特設ステージ</span><span class="list-item__subtitle">こんにちは、書道部です！私達は書道パフォーマンスを行います。土日2日間で披露する作品は計4つ！部員それぞれの好きな物を詰め込んだ作品です！書道パフォーマンスを見てみたいなと思った方だけでなく、嵐ファンの方やKPOP好きな方必見です✨</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <span class="list-item__title"><span style="margin-right: 25px;">〈OP〉</span>「It's 書 time!!」<br>場所：明和館</span><span class="list-item__subtitle">こんにちは、書道部です！明和祭の幕開けに相応しいパフォーマンスで、皆さんの最高の3日間をアシストします！<br>どうやら"めいわなびいはっぴー"に注目した方が良いらしいですよ(´･ﾉω･`)ｺｯｿﾘ</span>
+    </ons-list-item>
+
+    <ons-list-item>
+        <span class="list-item__title"><span style="margin-right: 25px;">〈部活有志〉</span>「芸術の万華鏡」<br>場所：本館3階美術室</span><span class="list-item__subtitle">こんにちは、書道部です。私たちは美術室にて、書道作品の展示を行っています。いつもは騒がしい書道部員達の意外な一面を覗きに来ませんか？個性豊かすぎる部員の作品達が、皆さんをお待ちしています！</span>
+    </ons-list-item>
+
+  </ons-page>
+  </ons-template>
+
+
+  <ons-template id="Music.html">
+  <ons-page id="Music">
+
+    <div class="page__background" style="background-image:url('contents/Home/musicBack.jpg'); background-size:cover;"></div>
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">明和祭テーマソング</div>
+    </ons-toolbar>
+
+    <div style="text-align: center; margin-top: 10%;">
+
+      <p><br>白と紫のライラック<br><br>作詞作曲：終の住処は廃墟でした。<br><br>ねぇ、今この瞬間だけは信じてもいいですか<br>君がとても幸せってことを<br><br>春の息吹で目を覚ましたとき<br>もうあの冬は終わってしまったんだ<br>夏の緑の匂いが香って<br>僕らの日々が今はじまるんだ<br><br>今春の陽が<br>僕ら照らす夏の陽になってく<br><br>ねぇ、今この時だけは信じてもいいですか<br>どこの誰より 僕らがいちばん 輝いてる<br>ねえ、今この瞬間だけは信じさせて<br>君がとても幸せってことを<br><br>秋の冷たい風がしみるころ<br>この世界に僕はひとりきり<br>冬の寒さは僕には強くて<br>自信を失いかけていたんだ<br><br>ねぇ、今この瞬間だけは信じてもいいですか<br>僕の努力がいつか必ずむくわれると<br>ねえ、今この瞬間だけは信じさせて<br>君が今も幸せってことを<br><br>ねえ、僕らの音はきみにとどいていますか<br>君の笑顔はどこに行ってしまったんだろうか<br>ああもう頑張れないそんな僕は弱虫だ<br>でも諦めたくない<br><br>ねぇ、今この瞬間だけは信じてもいいですか<br>どこの誰より 僕らがいちばん 輝いてる<br>ねえ、今この瞬間だけは信じさせて<br>君がとても幸せってことを<br></p>
+
+      <audio controls src="contents/Home/theme.m4a" controlslist="nodownload" preload="none"></audio>
+    </div>
+
+  </ons-page>
+  </ons-template>
+
+
+  <ons-template id="homeInfo2.html">
+  <ons-page id="homeInfo2">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">基本情報</div>
+    </ons-toolbar>
+
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
+    <ons-list-item expandable>
+      基本情報
+      <div class="expandable-content">日時：令和三年度<br>体育祭：９月１６日(木)<br>文化祭：９月２５日(土)～９月２７日(月)<br><br>場所：愛知県立明和高等学校名古屋市東区白壁二丁目32番6号<br>・市営バス「明和高校前」 すぐ<br>・名鉄瀬戸線「東大手」 徒歩２分<br>・市営地下鉄名城線「市役所」 東へ徒歩６分<br>・基幹バス「清水口」 西へ徒歩５分</div>
+    </ons-list-item>
+
+    <ons-list-item expandable>
+        明和2021テーマ
+        <div class="expandable-content">
+          <span class="list-item__title"><p style="font-size: 1.5em">MAY WANNA BE HAPPY</p></span><br>
+          <span class="list-item__subtitle">由来：みんなが幸せになれる明和祭にしたい。</span>
+        </div>
+    </ons-list-item>
+
+    <ons-list-item expandable>
+        イメージキャラクター
+        <div class="expandable-content">
+          <span class="list-item__title">
+            <img src="contents/Home/wallaby.png" width="98%" height="60%">
+            <p style="font-size: 1.5em">『めいわらびー』</p></span><br>
+          <span class="list-item__subtitle">頑張る明和生を応援したい。ひょうきんで明るいワラビーです。しっぽはワラビ。</span>
+        </div>
+    </ons-list-item>
+
+    <ons-list-item expandable>
+      あいさつ
+      <div class="expandable-content">
+
+      <ons-list-item expandable>
+        校長あいさつ
+        <div class="expandable-content"> コロナ禍にあっても前向きな姿勢を忘れず、知恵をしぼり、明和の伝統を継承しながら、叡智あふれる明和祭が創りあげられることを期待しています。 明和祭の活動を通じて、人と人のつながりの大切さを学んでほしい。他者の気持ちの動きに気づき、自分の考えや意見を適切な言葉で伝えて理解し合うことで、周囲の人との絆を深めてください。また、明和生はそれぞれが長所を持ち、興味深い人物ばかりです。お互いを認め合い、相手の良さを吸収しあう姿勢を大切にするように心がけてほしいと思います。失敗を恐れずにみんなで力をあわせて挑み、感動とかけがえのない仲間を手にしてくれることを願っています。青春を謳歌してください。<br>Youth comes but once in a lifetime.</div>
+      </ons-list-item>
+
+    <ons-list-item expandable>
+      生徒会長あいさつ
+      <div class="expandable-content"> "MAY WANNA BE HAPPY"<br>例年通りにはいかない明和祭、言い換えれば唯一無二の明和祭。<br>明和祭2021でしか味わえないこの空間に、感動に、精一杯の感謝と努力の集大成をぶつける４日間。<br>今宵始まる明和祭はきっと未来を輝かせる―――。</div>
+    </ons-list-item>
+
+    <ons-list-item expandable>
+      体育常任委員長あいさつ
+      <div class="expandable-content"> ついに、待ちに待った明和祭の日がやってきました。今年度は昨年度に続き、規制だらけの開催となりますが、準備してきたマスやオブジェ・ブロック旗を存分にアピールし、インパクトのある体育祭にしましょう！そして、間を空けてやってくる文化祭に向けてボルテージをあげていき、全４日間の明和祭を盛り上げていきましょう！！！</div>
+    </ons-list-item>
+
+    <ons-list-item expandable>
+      学校祭実行委員長あいさつ
+      <div class="expandable-content"> 今年は「あれ」の年ですね！！「あれ」ですよ「あれ」！！「東京オリンピック」ですよ！！ですが…せっかくの日本で開催するオリンピックなのに、コロナなどの影響でたくさんの問題点があり、十分には楽しめないでしょう。 そんな時に！明和祭で思う存分ハジけましょう！騒ぎましょう！高校生活は１回限りなのです！高校でのたった３回の文化祭を楽しまないと本当にもったいないですよ！あ、でも、密には気をつけてね。</div>
+    </ons-list-item>
+
+      </div>
+    </ons-list-item>
 
   </ons-page>
   </ons-template>
@@ -138,28 +605,28 @@
   <!-- 1階 -->
   <template id="map1.html">
   <ons-page>
-    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map1.pdf" type="application/pdf" width="200%" height="90%">
+    <embed src="contents/Map/map-1.png" type="image/png" width="200%" height="90%">
   </ons-page>
   </template>
 
   <!-- 2階 -->
   <template id="map2.html">
   <ons-page>
-    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map2.pdf" type="application/pdf" width="200%" height="90%">
+    <embed src="contents/Map/map-2.png" type="image/png" width="200%" height="90%">
   </ons-page>
   </template>
 
   <!-- 3階 -->
   <template id="map3.html">
   <ons-page>
-    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map3.pdf" type="application/pdf" width="200%" height="90%">
+    <embed src="contents/Map/map-3.png" type="image/png" width="200%" height="90%">
   </ons-page>
   </template>
 
   <!-- 4階 -->
   <template id="map4.html">
   <ons-page>
-    <embed src="https://mbaas.api.nifcloud.com/2013-09-01/applications/5haqSkiaiQIV9tMn/publicFiles/map4.pdf" type="application/pdf" width="200%" height="90%">
+    <embed src="contents/Map/map-4.png" type="image/png" width="200%" height="90%">
   </ons-page>
   </template>  
 
@@ -168,21 +635,95 @@
   <ons-template id="pamphlet.html">
   <ons-page id="pamphlet">
 
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
     <ons-toolbar>
       <div class="center">デジタルパンフレット</div>
     </ons-toolbar>
 
-    <div id="pamp"></div>
+    <ons-list-item modifier="chevron" onclick="popPampmain();" tappable>はじめに</ons-list-item>
+    <ons-list-item modifier="chevron" onclick="popPamppe();" tappable>体育祭</ons-list-item>
+    <ons-list-item modifier="chevron" onclick="popPampHR();" tappable>オープニング・HR企画・部活有志企画・フィナーレ</ons-list-item>
+    <ons-list-item modifier="chevron" onclick="popPampplay();" tappable>劇</ons-list-item>
+    <ons-list-item modifier="chevron" onclick="popPampother();" tappable>多目的広場・特設ステージ・東北物産展・etc…</ons-list-item>
 
   </ons-page>
   </ons-template>
+
+  <ons-template id="Pampmain.html">
+  <ons-page id="Pampmain">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">はじめに</div>
+    </ons-toolbar>
+
+    <div id="Pampmain1"></div>
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="Pamppe.html">
+  <ons-page id="Pamppe">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">体育祭</div>
+    </ons-toolbar>
+
+    <div id="Pamppe1"></div>
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="PampHR.html">
+  <ons-page id="PampHR">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">OP・HR企画・部活有志・FN</div>
+    </ons-toolbar>
+
+    <div id="PampHR1"></div>
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="Pampplay.html">
+  <ons-page id="Pampplay">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">劇</div>
+    </ons-toolbar>
+
+    <div id="Pampplay1"></div>
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="Pampother.html">
+  <ons-page id="Pampother">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">多目的広場・特設ステージ・etc…</div>
+    </ons-toolbar>
+
+    <div id="Pampother1"></div>
+
+  </ons-page>
+  </ons-template>
+
 
   <!-- Info (企画運営者モード) -->
   <ons-template id="info.html">
   <ons-page id="info">
 
+    <div class="page__background" style="background-image:url('contents/Home/Back.png'); background-size:cover;"></div>
+
     <ons-toolbar>
-      <div class="center">Info (企画運営者モード)</div>
+      <div class="center">Info</div>
       <div class="right">
       <ons-toolbar-button id="GoLogin">
         <ons-icon icon="fa-sign-in-alt"></ons-icon>
@@ -190,8 +731,140 @@
       </div>
     </ons-toolbar>
 
+    <div style="text-align: center">
+      <img src="contents/Info/logo.png" alt="ロゴ" style="margin-top: 50px" width="40%" height="40%">
+      <p style="margin-top: 25px; font-size: 1.5em">明和祭アプリ</p>
+      <p style="margin-top: -10px; font-size: 1.3em">2021</p>
+
+      <p style="margin-top: 25px; font-size: 1.25em"><span style="margin-right: 25px;">Made By</span>ta↑ku↓</p>
+      <a style="margin-top: -20px; font-size: 1.25em" href= "https://twitter.com/takutuki3">Twitter<img src="contents/Info/Twitter_logo.png" alt="ツイッターロゴ" style="vertical-align: -1%;" width="25.85px" height="21.275px"></a>
+    </div>
+
+    <ons-list-item modifier="chevron" onclick="termsOfService();" style="margin-top: 50px;" tappable>利用規約</ons-list-item>
+    <ons-list-item modifier="chevron" onclick="privacyPolicy();" tappable>プライバシーポリシー</ons-list-item>
+
   </ons-page>
   </ons-template>
+
+
+  <ons-template id="termsOfService.html">
+  <ons-page id="termsOfService">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">利用規約</div>
+    </ons-toolbar>
+
+<p>
+明和祭2021アプリ利用規約<br>
+<br>
+この利用規約(以下、「本規約」といいます。)は、愛知県立明和高等学校学校祭実行委員会(以下、「本委員会」といいます。)がこのアプリ上で提供するサービス(以下、「本サービス」といいます。)の利用条件を定めるものです。ユーザーの皆さま(以下、「ユーザー」といいます。)には、本規約に従って、本サービスをご利用いただきます。<br>
+<br>
+第1条(適用)<br>
+1.本規約は、ユーザーと本委員会との間の本サービスの利用に関わる一切の関係に適用されるものとします。<br>
+2.本委員会は本サービスに関し、本規約のほか、ご利用にあたってのルール等、各種の定め(以下、「個別規定」といいます。)をすることがあります。これら個別規定はその名称のいかんに関わらず、本規約の一部を構成するものとします。本規約の規定が前条の個別規定の規定と矛盾する場合には、個別規定において特段の定めなき限り、個別規定の規定が優先されるものとします。<br>
+<br>
+第2条(利用登録)<br>
+皆様は本サービスにおいてはインストール、利用その他のアクセスをすることで、本規約に同意したものとみなされます。<br>
+<br>
+第3条(禁止事項)<br>
+ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。<br>
+1.法令または公序良俗に違反する行為<br>
+2.犯罪行為に関連する行為<br>
+3.本サービスの内容等、本サービスに含まれる著作権、商標権ほか知的財産権を侵害する行為<br>
+4.本委員会、ほかのユーザー、またはその他第三者のサーバーまたはネットワークの機能を破壊したり、妨害したりする行為<br>
+5.本サービスによって得られた情報を商業的に利用する行為<br>
+6.本委員会のサービスの運営を妨害するおそれのある行為<br>
+7.不正アクセスをし、またはこれを試みる行為<br>
+8.他のユーザーに関する個人情報等を収集または蓄積する行為<br>
+9.不正な目的を持って本サービスを利用する行為<br>
+10.本サービスの他のユーザーまたはその他の第三者に不利益、損害、不快感を与える行為<br>
+11.他のユーザーに成りすます行為<br>
+12.本委員会が許諾しない本サービス上での宣伝、広告、勧誘、または営業行為<br>
+13.面識のない異性との出会いを目的とした行為<br>
+14.本委員会のサービスに関連して、反社会的勢力に対して直接または間接に利益を供与する行為<br>
+15.その他、当校が不適切と判断する行為<br>
+<br>
+第4条(本サービスの提供の停止等)<br>
+1.本委員会は、以下のいずれかの事由があると判断した場合、ユーザーに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。<br>
+	①.本サービスにかかるコンピュータシステムの保守点検または更新を行う場合<br>
+	②.地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合<br>
+	③.コンピュータまたは通信回線等が事故により停止した場合<br>
+	④.その他、本委員会が本サービスの提供が困難と判断した場合<br>
+2.本委員会は、本サービスの提供の停止または中断により、ユーザーまたは第三者が被ったいかなる不利益または損害についても、一切の責任を負わないものとします。<br>
+<br>
+第5条(退会)<br>
+ユーザーは、アプリの消去により、本サービスから退会できるものとします。<br>
+<br>
+第6条(保証の否認および免責事項)<br>
+1.本委員会は、本サービスに事実上または法律上の瑕疵(安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。)がないことを明示的にも黙示的にも保証しておりません。<br>
+2.本委員会は、本サービスに起因してユーザーに生じたあらゆる損害について一切の責任を負いません。ただし、本サービスに関する本委員会とユーザーとの間の契約(本規約を含みます。)が消費者契約法に定める消費者契約となる場合、この免責規定は適用されません。<br>
+3.前項ただし書に定める場合であっても、本委員会は、本委員会の過失(重過失を除きます。)による債務不履行または不法行為によりユーザーに生じた損害のうち特別な事情から生じた損害(本委員会またはユーザーが損害発生につき予見し、または予見し得た場合を含みます。)について一切の責任を負いません。<br>
+4.本委員会は、本サービスに関して、ユーザーと他のユーザーまたは第三者との間において生じた取引、連絡または紛争等について一切責任を負いません。<br>
+<br>
+第7条(サービス内容の変更等)本委員会は、ユーザーに通知することなく、本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし、これによってユーザーに生じた損害について一切の責任を負いません。<br>
+<br>
+第8条(利用規約の変更)本委員会は、必要と判断した場合には、ユーザーに通知することなくいつでも本規約を変更することができるものとします。なお、本規約の変更後、本サービスの利用を開始した場合には、当該ユーザーは変更後の規約に同意したものとみなします。<br>
+<br>
+第9条(権利義務の譲渡の禁止)ユーザーは、本委員会の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。<br>
+</p>
+
+  </ons-page>
+  </ons-template>
+
+  <ons-template id="privacyPolicy.html">
+  <ons-page id="privacyPolicy">
+
+    <ons-toolbar>
+      <div class="left"><ons-back-button>戻る</ons-back-button></div>
+      <div class="center">プライバシーポリシー</div>
+    </ons-toolbar>
+
+<p>
+明和祭2021アプリプライバシーポリシー<br>
+<br>
+愛知県立明和高等学校学校祭実行委員会(以下、「本委員会」といいます。)は、本アプリ上で提供するサービス(以下、「本サービス」といいます。)における、ユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー(以下、「本ポリシー」といいます。)を定めます。<br>
+<br>
+第1条(個人情報)<br>
+「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報の当該情報単体から特定の個人を識別できる情報(個人識別情報)を指します。<br>
+<br>
+第2条(個人情報の収集方法)<br>
+本委員会は、ユーザーがアンケートの記入をする際に氏名、生年月日、住所などの個人情報をお尋ねすることがあります。アプリにより自動的に個人情報を収集することはございません。<br>
+<br>
+第3条(個人情報を収集・利用する目的)<br>
+本委員会が個人情報を収集・利用する目的は、以下のとおりです。<br>
+1.本サービスの提供・運営のため<br>
+2.ユーザーからのお問い合わせに回答するため(本人確認を行うことを含む)<br>
+3.上記の利用目的に付随する目的<br>
+<br>
+第4条(利用目的の変更)<br>
+1.本委員会は、利用目的が変更前と関連性を有すると合理的に認められる場合に限り、個人情報の利用目的を変更するものとします。<br>
+2.利用目的の変更を行った場合には、変更後の目的について、本委員会所定の方法により、ユーザーに通知し、または本アプリ上に公表するものとします。<br>
+<br>
+第5条(個人情報の第三者提供)<br>
+本委員会は、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。<br>
+<br>
+第6条(個人情報の訂正および削除)<br>
+1.ユーザーは、本委員会の保有する自己の個人情報が誤った情報である場合には、本委員会が定める手続きにより、本委員会に対して個人情報の訂正、追加または削除(以下、「訂正等」といいます。)を請求することができます。<br>
+2.本委員会は、ユーザーから前項の請求を受けてその請求に応じる必要があると判断した場合には、遅滞なく、当該個人情報の訂正等を行うものとします。<br>
+3.本委員会は、前項の規定に基づき訂正等を行った場合、または訂正等を行わない旨の決定をしたときは遅滞なく、これをユーザーに通知します。<br>
+<br>
+第7条(プライバシーポリシーの変更)<br>
+1.本ポリシーの内容は、法令その他本ポリシーに別段の定めのある事項を除いて、ユーザーに通知することなく、変更することができるものとします。<br>
+2.当校が別途定める場合を除いて、変更後のプライバシーポリシーは、本アプリに掲載したときから効力を生じるものとします。<br>
+<br>
+第8条(お問い合わせ)<br>
+データ保護に関するご質問、またはご自分の個人データの問題解決に関するご依頼などは、以下のTwitterアカウントまで、DMでお寄せください。<br>
+コントローラー名:愛知県立明和高等学校学校祭実行委員会IT部署<br>
+住所:〒461-0011 名古屋市東区白壁二丁目32番6号<br>
+電子メールアドレス:meiwa.seitokai@gmail.com<br>
+Twitterアカウント:@takutuki3
+</p>
+
+  </ons-page>
+  </ons-template>
+
+  
 
   <!-- ログインページ -->
   <ons-template id="Login.html">
@@ -251,6 +924,7 @@
   </ons-template>
 
 <script src="Reserve.js"></script>
-<script src="pdf.js"></script><!-- スプリクト読み込み -->
+<script src="pdf.js"></script>
+<script src="Info.js"></script><!-- スプリクト読み込み -->
 </body>
 </html>
