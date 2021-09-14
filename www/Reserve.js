@@ -68,7 +68,7 @@ function Information() {
     console.log(ReserveInfo);
 
     if (ReserveInfo.TorF != 0) {
-      tableSource += "<ons-list-item><div><span class='list-item__title' id=MO" + i + ">" + ReserveInfo.MO + "</span></div>\n<div class='right'><span class='list-item__subtitle' id=WAIT" + i + ">" + WaitMinutes + "分</span></div></ons-list-item>\n";
+      tableSource += "<ons-list-header>" + ReserveInfo.MO + "</ons-list-header>\n<ons-list-item><div><span class='list-item__title'>" + ReserveInfo.NAME + "</span></div>\n<div class='right'><span class='list-item__subtitle'>" + WaitMinutes + "分</span></div></ons-list-item>\n";
     }
 
     let SaveReserve = localStorage.getItem(ReserveInfo.MO)
@@ -157,6 +157,10 @@ function check(Raw_Destination) {
   destination = destination[1]
   console.log(destination)  //送信先決定
 
+  if (destination === undefined) {
+    return;
+  }
+
   //予約番号取得
   GetReserveInfo.equalTo("MO", destination).order("PgmIn").limit(1).fetchAll()
                 .then(function(results){
@@ -182,7 +186,7 @@ function check(Raw_Destination) {
 
         console.log("After" + reserveNum);
 
-        if (reserveNum > 35 && TorF == 0) {
+        if (reserveNum > 66 && TorF == 0) {
           alert("満員になったので予約を締め切りました。")
           return;
         }
