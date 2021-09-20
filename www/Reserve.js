@@ -270,7 +270,6 @@ function GetChange() {
         document.getElementById("ChangeSituation").innerHTML = ChangeSituationText;
 }})};
 
-//できたあああああああああああ
 //入場記録送信
 function SendPeople() {
   GetChange()
@@ -300,3 +299,22 @@ GetReserveInfo.equalTo("MO", LoginUser).fetch()
     return;
   });
 };
+
+function ReserveRemove () {
+
+let RemoveTF = confirm('端末に入っている予約を削除しますか？');
+if (RemoveTF) {
+
+  GetReserveInfo.order("ID").fetchAll()
+                .then(function(results){
+  for (var i = 0; i < results.length; i++) {
+
+    let RemoveResults = results[i]
+    localStorage.removeItem(RemoveResults.MO);
+
+}
+
+  alert("削除しました。");
+
+})
+}}

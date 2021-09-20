@@ -42,6 +42,10 @@ function privacyPolicy () {
   document.getElementById("myNavigator").pushPage("privacyPolicy.html")
 }
 
+function popStaffList () {
+  document.getElementById("myNavigator").pushPage("StaffList.html")
+}
+
 document.addEventListener('show', function(event) {
 let page = event.target;
 
@@ -74,4 +78,6 @@ if (page.id === "home") {
     document.getElementById("Title").innerHTML = putDays;
 
   }
-}})
+}
+
+})
