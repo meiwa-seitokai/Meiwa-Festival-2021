@@ -186,7 +186,7 @@ function check(Raw_Destination) {
 
         console.log("After" + reserveNum);
 
-        if (reserveNum > 66 && TorF == 0) {
+        if (reserveNum > 80 && TorF == 0) {
           alert("満員になったので予約を締め切りました。")
           return;
         }
