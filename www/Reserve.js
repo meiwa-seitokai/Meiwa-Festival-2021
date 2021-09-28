@@ -71,6 +71,19 @@ function Information() {
       tableSource += "<ons-list-header>" + ReserveInfo.MO + "</ons-list-header>\n<ons-list-item><div><span class='list-item__title'>" + ReserveInfo.NAME + "</span></div>\n<div class='right'><span class='list-item__subtitle'>" + WaitMinutes + "分</span></div></ons-list-item>\n";
     }
 
+    if (ReserveInfo.OUT > ReserveInfo.IN) {
+    GetReserveInfo.equalTo("MO", ReserveInfo.MO).fetch()
+    .then(function(results){
+
+      results.set("PgmIn", ReserveInfo.OUT)
+      results.update();
+      console.log(ReserveInfo.MO + "Fixed!")
+    })
+    .catch(function(err){
+      alert(error.code);
+    });
+    }
+
     let SaveReserve = localStorage.getItem(ReserveInfo.MO)
     let showTF = 1
 
